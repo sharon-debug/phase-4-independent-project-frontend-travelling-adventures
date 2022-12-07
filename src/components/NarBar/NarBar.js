@@ -1,48 +1,36 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { links} from './data';
-// import logo from './logo.svg';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+// import RubyVacationsNavLogoTransparent from '../assets/RubyVacationsNavLogoTransparent.gif';
+import "./NarBar.css";
 
-const Navbar = () => {
-  const [showLinks, setShowLinks] = useState(false);
-  const linksContainerRef = useRef(null);
-  const linksRef = useRef(null);
-  const toggleLinks = () => {
-    setShowLinks(!showLinks);
-  };
-  useEffect(() => {
-    const linksHeight = linksRef.current.getBoundingClientRect().height;
-    if (showLinks) {
-      linksContainerRef.current.style.height = `${linksHeight}px`;
-    } else {
-      linksContainerRef.current.style.height = '0px';
+function NavBar({ setUser, setIsAuthenticated }) {
+    const history = useNavigate()
+    function handleLogout(){
+        fetch('/logout', {
+            method: 'DELETE',
+        }).then(() => {
+            setIsAuthenticated(false)
+            setUser(null)
+            history.push('/')
+        });
     }
-  }, [showLinks]);
-  return (
-    <nav>
-      <div className='nav-center'>
-        <div className='nav-header'>
-          {/* <img src={logo} className='logo' alt='logo' /> */}
-          <button className='nav-toggle' onClick={toggleLinks}>
-            <FaBars />
-          </button>
-        </div>
-        <div className='links-container' ref={linksContainerRef}>
-          <ul className='links' ref={linksRef}>
-            {links.map((link) => {
-              const { id, url, text } = link;
-              return (
-                <li key={id}>
-                  <a href={url}>{text}</a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        
-      </div>
-    </nav>
-  );
-};
 
-export default Navbar;
+    return (
+        <div className='nav'>
+            <div className='logo-div'>
+                {/* <img src={RubyVacationsNavLogoTransparent} className="Nav-logo" alt="logo" /> */}
+            </div>
+            <div className='links-div'>
+                <h1><Link to="/userprofile" className='nav-links'>PROFLE</Link></h1>
+                <h1><Link to="/myvisits" className='nav-links'>MY VISITS</Link></h1>
+                <h1><Link to="/myreviews" className='nav-links'>MY REVIEWS</Link></h1>
+                <h1><Link to="/availablehouses" className='nav-links'>AVAILABLE HOUSES</Link></h1>
+            </div>
+            <div className="navLogoutDiv">
+                <button  className="navLogout"  onClick={handleLogout}>LOG OUT</button>
+            </div>
+        </div>
+    )
+}
+ 
+export default NavBar;

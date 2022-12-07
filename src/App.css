@@ -73,7 +73,7 @@ Global Styles
   justify-content: center;
   text-align: center;
   margin-left: 280px;
-  background-image: url(/src/Components/assets/panel-background.jpg);
+  /* background-image: url(/src/Components/assets/panel-background.jpg); */
   min-height: 100vh; 
 }
 

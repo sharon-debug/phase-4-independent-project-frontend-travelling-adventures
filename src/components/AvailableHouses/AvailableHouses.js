@@ -1,5 +1,5 @@
 import React from 'react';
-import HouseCard from '../HouseCard/HouseCard.js';
+import HouseCard from '../HouseCard/HouseCard';
 import './AvailableHouses.css';
 
 function AvailableHouses({houses, setSelectedState, selectedState}) {

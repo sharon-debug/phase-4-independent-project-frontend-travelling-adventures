@@ -9,7 +9,7 @@
     justify-content: center; 
     align-items: center; 
     margin-top: 2.5rem; 
-    background-image: url(/src/Components/assets/circle-background.png);  
+    /* background-image: url(/src/Components/assets/circle-background.png);   */
     background-repeat: no-repeat;
     background-size: contain;
     border-radius: 50%;  

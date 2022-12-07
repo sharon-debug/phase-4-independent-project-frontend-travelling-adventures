@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch, Redirect } from 'react-router-dom';
-import NavBar from '../Components/NavBar/NavBar';
-import AvailableHouses from '../Components/AvailableHouses/AvailableHouses';
-import UserProfile from '../Components/UserProfile/UserProfile';
-import MyReviews from '../Components/MyReviews/MyReviews';
-import MyVisits from '../Components/MyVisits/MyVisits';
-import LoginSignUpPage from '../Components/LoginSignUpPage/LoginSignUpPage';
-import HouseProfile from '../Components/HouseProfile/HouseProfile';
+import {  BrowserRouter, Route, NavLink } from 'react-router-dom';
+import NavBar from "./components/NarBar/NarBar";
+import AvailableHouses from "./components/AvailableHouses/AvailableHouses";
+import UserProfile from "./components/UserProfile/UserProfile";
+import MyReviews from "./components/MyReviews/MyReviews";
+import MyVisits from "./components/MyVisits/MyVisits";
+import LoginSignUpPage from "./components/LoginSignUpPage/LoginSignUpPage";
+import HouseProfile from "./components/HouseProfile/HouseProfile";
 import './App.css';
+
+
+const API_URL = "http://127.0.0.1:3000/houses"
+
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -53,31 +58,31 @@ function App() {
   if(!isAuthenticated) return <LoginSignUpPage setUser={setUser} setIsAuthenticated={setIsAuthenticated} />
   return (
       <div className="app">
-        <Switch>
+        <BrowserRouter>
           <Route exact path="/">
-            {isAuthenticated ? <Redirect to= "/availablehouses"/> : <LoginSignUpPage  setUser={setUser} setIsAuthenticated={setIsAuthenticated}/>}
+            {isAuthenticated ? <NavLink to= "/availablehouses"/> : <LoginSignUpPage  setUser={setUser} setIsAuthenticated={setIsAuthenticated}/>}
           </Route>
           <div>
             <NavBar setUser={setUser} setIsAuthenticated={setIsAuthenticated} />
             <div className="body">
               <Route exact path="/availablehouses">
-                  {isAuthenticated ? <AvailableHouses houses={filterHouses()} setSelectedState={setSelectedState} selectedState={selectedState} /> : <Redirect to="/"/>}
+                  {isAuthenticated ? <AvailableHouses houses={filterHouses()} setSelectedState={setSelectedState} selectedState={selectedState} /> : <NavLink to="/"/>}
               </Route>
               <Route path="/userprofile">
-                {isAuthenticated ? <UserProfile user={user}/> : <Redirect to="/"/>}
+                {isAuthenticated ? <UserProfile user={user}/> : <NavLink to="/"/>}
               </Route>
               <Route path="/myvisits">
-                {isAuthenticated ? <MyVisits user={user} houses={houses}/> : <Redirect to="/"/>}
+                {isAuthenticated ? <MyVisits user={user} houses={houses}/> : <NavLink to="/"/>}
               </Route>
               <Route path="/myreviews">
-                {isAuthenticated ? <MyReviews user={user} reviews={reviews} setReviews={setReviews} houses={houses}/>  : <Redirect to="/"/>}
+                {isAuthenticated ? <MyReviews user={user} reviews={reviews} setReviews={setReviews} houses={houses}/>  : <NavLink to="/"/>}
               </Route>
               <Route path="/availablehouses/:id">
-                {isAuthenticated ? <HouseProfile user={user}/>  : <Redirect to="/"/>}
+                {isAuthenticated ? <HouseProfile user={user}/>  : <NavLink to="/"/>}
               </Route>
             </div>
           </div>
-        </Switch>
+        </BrowserRouter>
       </div>
   );
 }
